@@ -16,17 +16,18 @@ GeoJson Format specification is defined in RFC7964 - see https://www.rfc-editor.
 This package parses GeoJson data and creates spatial objects like [Marker]s, [Polyline]s and [Polygon]s, 
 which are defined in [flutter_map] package.
 
-The ceration of these objects is done by default callback functions. However, one can and probably should 
+The creation of these objects is done by default callback functions. However, one can and probably should 
 write his own callback functions which are implementing the necessary customization of creating spatial objects by specifying 
 the color, stroke, label text and other parameters.  
 
 
 ## Features
 
-The GeoJson parser creates three lists of spatial objects - separate lists of [Marker]s, [Polyline]s and [Polygon]s which are input parameters for creating layers in flutter_map.
+The GeoJson parser creates three (four) lists of spatial objects - separate lists of [Marker]s, [Polyline]s and [Polygon]s (and Circles) which are input data for creating layers in flutter_map.
 The parser supports parsing the following geometries:
 
 - Point - transformed into [Marker]s
+- Circle - transformed into [CircleMarker]s - not part of the spec, but handy to have.  Specify radius in the properties.
 - Multipoint - transformed into multiple [Marker]s with same ID property
 - LineString - tranformed in [Polyline]
 - MultiLineString - transformed into multiple [Polyline]s
@@ -39,7 +40,7 @@ The parser supports parsing the following geometries:
 Add the package in pubspec.yaml file:
 
 ```dart
-flutter_map_geojson ^1.0.0
+flutter_map_geojson ^1.0.5
 ```
 
 Import it in the code:
@@ -84,8 +85,9 @@ import 'package:flutter_map_geojson/flutter_map_geojson.dart';
         ));
 ```
 
-The default [Marker], [Polyline] and [Polygon] creation callback functions can be replaced with user-defined highly customized
+The default [Marker], [Polyline] [CircleMarkers] and [Polygon] creation callback functions can be replaced with user-defined highly customized
 functions. A good starting point are default callback functions which can be custimized to the needs of the project. The default callback functions have only basic functionality to display the spatial objects on the map. The default callback functions support changing the colors, stroke and fill color and marker icon. All these can be defined in default constructor or via setters. 
+One can also apply a filtering function which returns only spatial features that have certian propertis. The filtering function returns a boolean value. For more details see the example program.
 
 For creating tappable polylines one can use package flutter_map_tappable_polyline.
 
